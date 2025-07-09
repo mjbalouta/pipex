@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/09 16:38:34 by mjoao-fr         ###   ########.fr       */
+/*   Created: 2025/04/07 15:30:20 by mjoao-fr          #+#    #+#             */
+/*   Updated: 2025/04/17 13:02:52 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+/**
+ * @file ft_strchr.c
+ * @brief returns a pointer to the first occurrence of
+the character c in the string s.
+ */
 
-# include "./libft-projects/get-next-line/get_next_line.h"
-# include "./libft-projects/libft/libft.h"
-# include "./libft-projects/printf/libftprintf.h"
+#include "libft.h"
 
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
 
-
-
-
-#endif
+	i = 0;
+	while (s[i] && s[i] != (char )c)
+		i++;
+	if (s[i] == (char )c || !c)
+		return ((char *)(s + i));
+	return (NULL);
+}

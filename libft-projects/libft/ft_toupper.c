@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/09 16:38:34 by mjoao-fr         ###   ########.fr       */
+/*   Created: 2025/04/07 15:30:55 by mjoao-fr          #+#    #+#             */
+/*   Updated: 2025/04/17 13:09:00 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+/**
+ * @file ft_toupper.c
+ * @brief If c is a lowercase letter, toupper()
+returns its uppercase equivalent, if an uppercase
+representation exists in the current locale.
+Otherwise, it returns c. 
+ */
 
-# include "./libft-projects/get-next-line/get_next_line.h"
-# include "./libft-projects/libft/libft.h"
-# include "./libft-projects/printf/libftprintf.h"
+#include "libft.h"
 
-
-
-
-
-#endif
+int	ft_toupper(int c)
+{
+	if (c >= 'a' && c <= 'z')
+	{
+		c = c - 32;
+	}
+	return (c);
+}

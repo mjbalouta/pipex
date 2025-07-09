@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/09 16:38:34 by mjoao-fr         ###   ########.fr       */
+/*   Created: 2025/04/14 14:21:52 by mjoao-fr          #+#    #+#             */
+/*   Updated: 2025/04/17 11:31:38 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+/**
+ * @file ft_putchar_fd.c
+ * @brief Outputs the character ’c’ to the specified file
+descriptor.
+ */
 
-# include "./libft-projects/get-next-line/get_next_line.h"
-# include "./libft-projects/libft/libft.h"
-# include "./libft-projects/printf/libftprintf.h"
+#include "libft.h"
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
 
-
-
-
-#endif
+/*int main(void)
+{
+    char c = 'c';
+    ft_putchar_fd(c, 1);
+    return (0);
+}*/
