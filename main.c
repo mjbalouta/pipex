@@ -6,7 +6,15 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:10 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/09 15:50:18 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:05:16 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
+
+int	main(int ac, char **av)
+{
+	if (ac != 5)
+		return (ft_printf("Error\n"));
+	
+}
