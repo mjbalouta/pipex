@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/11 15:12:21 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:13:32 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,18 @@
 # include "./libft-projects/libft/libft.h"
 # include "./libft-projects/printf/libftprintf.h"
 
+typedef struct s_command
+{
+	char	**command;
+	char	*full_path;
+}				t_command;
 
-int		handle_commands(char **av);
-char	*find_command(char *av);
+int		verify_path(char **envp, t_command *comm);
+char	*find_path_variable(char **envp);
+int		handle_commands(char **av, t_command *comm_in, t_command *comm_out, char **envp);
+char	**find_command(char *av, t_command *comm);
+void	free_mem(t_command *comm_in, t_command *comm_out);
+void	free_path_list(char **path_list);
 
 
 #endif
