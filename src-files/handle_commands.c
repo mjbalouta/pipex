@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/14 16:28:03 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/18 19:10:16 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*find_path_variable(char **envp)
 	return (env_path);
 }
 
-int	verify_path(char **envp, t_command *comm)
+int	verify_path(char **envp, t_comm *comm)
 {
 	char	*env_path;
 	char	**path_list;
@@ -49,26 +49,32 @@ int	verify_path(char **envp, t_command *comm)
 		if (access(full_path, X_OK) == 0)
 		{
 			comm->full_path = full_path;
-			free_path_list(path_list);
+			free_list(path_list);
 			return (0);
 		}
 		i++;
+		free(full_path);
 	}
-	free_path_list(path_list);
+	free_list(path_list);
 	return (-1);
 }
 
-char	**find_command(char *av, t_command *comm)
+int	handle_comm(char **av, t_comm *comm_in, t_comm *comm_out, char **envp)
 {
-	comm->command = ft_split(av, ' ');
-	return (comm->command);
-}
-
-int	handle_commands(char **av, t_command *comm_in, t_command *comm_out, char **envp)
-{
-	comm_in->command = find_command(av[2], comm_in);
-	comm_out->command = find_command(av[3], comm_out);
-	if (verify_path(envp, comm_in) == -1 || verify_path(envp, comm_in) == -1)
+	comm_in->command = ft_split(av[2], ' ');
+	comm_out->command = ft_split(av[3], ' ');
+	if (verify_path(envp, comm_in) == -1)
+	{
+		free_list(comm_in->command);
+		free_list(comm_out->command);
 		return (-1);
+	}
+	if (verify_path(envp, comm_out) == -1)
+	{
+		free_list(comm_in->command);
+		free(comm_in->full_path);
+		free_list(comm_out->command);
+		return (-1);
+	}
 	return (0);
 }

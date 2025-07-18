@@ -6,20 +6,26 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/14 16:14:50 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/18 19:39:42 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
 NAME        = pipex
-SRCS 		= main.c handle_commands.c free_mem.c
+SRCS 		= ./src-files/main.c ./src-files/handle_commands.c ./src-files/free_mem.c
+BONUS_SRCS	= ./src-bonus-files/main.c
 OBJS        = $(SRCS:.c=.o)
+BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
 LIBFT_DIR   = ./libft-projects
 LIBFT       = $(LIBFT_DIR)/complete_libft.a
 
 all: $(NAME)
 
+bonus: $(LIBFT) $(OBJS)
+	@echo "Compiling bonus..."
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
+	
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "Compiling..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
@@ -34,6 +40,7 @@ clean:
 	@echo "Removing objects..."
 	@$(MAKE) clean -C $(LIBFT_DIR) > /dev/null
 	@rm -f $(OBJS)
+	@rm -f $(BONUS_OBJS)
 
 fclean: clean
 	@echo "Removing executable..."

@@ -6,34 +6,30 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/14 16:13:06 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/18 19:08:15 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_mem(t_command *comm_in, t_command *comm_out)
+void	free_mem(t_comm *comm)
 {
-	if (comm_in->command)
-		free(comm_in->command);
-	if (comm_in->full_path)
-		free(comm_in->full_path);
-	if (comm_out->command)
-		free(comm_out->command);
-	if (comm_out->full_path)
-		free(comm_out->full_path);
+	if (comm->command)
+		free_list(comm->command);
+	if (comm->full_path)
+		free(comm->full_path);
 }
 
-void	free_path_list(char **path_list)
+void	free_list(char **list)
 {
 	int	i;
 
 	i = 0;
-	while (path_list[i])
+	while (list[i])
 	{
-		free(path_list[i]);
+		free(list[i]);
 		i++;
 	}
-	free(path_list);
-	path_list = NULL;
+	free(list);
+	list = NULL;
 }

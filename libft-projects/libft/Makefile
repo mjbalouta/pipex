@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 18:50:42 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/06/30 12:07:57 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/18 19:37:41 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,34 +17,15 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
 #listing the sources used by the program
-SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_recalloc.c
-BONUS_SRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_recalloc.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 #name of the executable
 NAME = libft.a
 
 #rule to create objs
 OBJS = $(SRCS:.c=.o)
-
-#rule to create bonus objs
-BONUS_OBJS = $(BONUS_SRCS:.c=.o)
  
-all: $(NAME) bonus
-
-#checks if library already exists to compile everything correctly without relinking
-#checks if bonus files are already compiled 
-bonus: $(OBJS) $(BONUS_OBJS)
-	@if [ ! -f $(NAME) ]; then \
-		echo "Library doesn't exist, creating libft.a..."; \
-		ar rcs $(NAME) $(OBJS); \
-	fi
-	
-	@if ar t $(NAME) | grep -q 'ft_lstnew.o'; then \
-		echo "Bonus objects already included."; \
-	else \
-		echo "Compiling with bonus files..."; \
-		ar rcs $(NAME) $(BONUS_OBJS); \
-	fi
+all: $(NAME)
 
 #rule to create the static library libft.a from object files .o
 $(NAME): $(OBJS)
@@ -59,7 +40,7 @@ $(NAME): $(OBJS)
 #clean rule (removes .o files, but not the static library)
 clean:
 	@@echo "Removing objects..."
-	@rm -f $(OBJS) $(BONUS_OBJS) #-f forces the removal of files supressing possible errors
+	@rm -f $(OBJS) #-f forces the removal of files supressing possible errors
 
 fclean: clean #removes objects and library
 	@@echo "Removing library..."
@@ -67,5 +48,5 @@ fclean: clean #removes objects and library
 
 re: fclean $(NAME) #recompiles everything
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
 
