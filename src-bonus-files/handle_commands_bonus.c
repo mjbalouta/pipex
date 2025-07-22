@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/22 17:11:03 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:44:33 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,18 @@ int	write_full_path(char **envp, char *command, t_comm *comm)
 		path = ft_strjoin(path_list[i], "/");
 		full_path = ft_strjoin(path, command);
 		free(path);
-		if (verify_command(full_path) == -1)
+		if (verify_command(full_path) == 0)
 		{
+			comm->full_path = full_path;
 			free(full_path);
 			free_list(path_list);
-			return (-1);
+			return (0);
 		}
-		comm->full_path = full_path;
-		free_list(path_list);
 		i++;
 	}
-	return (0);
+	free(full_path);
+	free_list(path_list);
+	return (-1);
 }
 
 int	verify_command(char *full_path)
@@ -80,7 +81,7 @@ int	handle_comm(t_args *args, t_comm *comm)
 			comm->first_command = curr_comm;
 		else if (i == (args->ac - 2))
 			comm->last_command = curr_comm;
-		if (write_full_path(args->envp, curr_comm[i], comm) == -1)
+		if (write_full_path(args->envp, curr_comm[0], comm) == -1)
 		{
 			if (comm->first_command)
 				free_list(comm->first_command);
@@ -89,6 +90,7 @@ int	handle_comm(t_args *args, t_comm *comm)
 			free_list(curr_comm);
 			return (-1);
 		}
+		i++;
 	}
 	return (0);
 }
