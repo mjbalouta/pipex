@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/22 12:09:31 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:11:03 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*find_path_variable(char **envp)
 	int		i;
 
 	i = 0;
+	env_path = NULL;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -44,7 +45,7 @@ int	write_full_path(char **envp, char *command, t_comm *comm)
 	while (path_list[i])
 	{
 		path = ft_strjoin(path_list[i], "/");
-		full_path = ft_strjoin(path, command[0]);
+		full_path = ft_strjoin(path, command);
 		free(path);
 		if (verify_command(full_path) == -1)
 		{
@@ -66,7 +67,7 @@ int	verify_command(char *full_path)
 	return (-1);
 }
 
-int	handle_comm(t_args *args, t_comm *comm, char **envp)
+int	handle_comm(t_args *args, t_comm *comm)
 {
 	int		i;
 	char	**curr_comm;
@@ -79,7 +80,7 @@ int	handle_comm(t_args *args, t_comm *comm, char **envp)
 			comm->first_command = curr_comm;
 		else if (i == (args->ac - 2))
 			comm->last_command = curr_comm;
-		if (write_full_path(envp, curr_comm, comm) == -1)
+		if (write_full_path(args->envp, curr_comm[i], comm) == -1)
 		{
 			if (comm->first_command)
 				free_list(comm->first_command);

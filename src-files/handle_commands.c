@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/18 19:10:16 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:55:50 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*find_path_variable(char **envp)
 	int		i;
 
 	i = 0;
+	env_path = NULL;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)

@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/18 20:37:16 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/22 17:13:21 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ OBJS        = $(SRCS:.c=.o)
 BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
 LIBFT_DIR   = ./libft-projects
 LIBFT       = $(LIBFT_DIR)/complete_libft.a
-IS_BONUS    = no
 
 all: $(LIBFT) $(NAME)
 
@@ -27,14 +26,9 @@ $(NAME): $(OBJS)
 	@echo "Compiling..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-bonus: IS_BONUS = yes
-bonus: $(LIBFT) $(NAME)
-# Rebuild with BONUS_OBJS if bonus is requested
-ifeq ($(IS_BONUS), yes)
-$(NAME): $(BONUS_OBJS)
+bonus: $(LIBFT) $(BONUS_OBJS)
 	@echo "Compiling bonus..."
 	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
-endif
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) > /dev/null
