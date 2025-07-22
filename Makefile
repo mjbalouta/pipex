@@ -6,13 +6,14 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/22 17:13:21 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/22 17:26:56 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
 NAME        = pipex
+BONUS_NAME	= pipex_bonus
 SRCS        = ./src-files/main.c ./src-files/handle_commands.c ./src-files/free_mem.c
 BONUS_SRCS  = ./src-bonus-files/main_bonus.c ./src-bonus-files/handle_commands_bonus.c ./src-bonus-files/free_mem_bonus.c
 OBJS        = $(SRCS:.c=.o)
@@ -22,13 +23,15 @@ LIBFT       = $(LIBFT_DIR)/complete_libft.a
 
 all: $(LIBFT) $(NAME)
 
+bonus: $(LIBFT) $(BONUS_NAME)
+
+$(BONUS_NAME): $(BONUS_OBJS)
+	@echo "Compiling bonus..."
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(BONUS_NAME)
+
 $(NAME): $(OBJS)
 	@echo "Compiling..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-
-bonus: $(LIBFT) $(BONUS_OBJS)
-	@echo "Compiling bonus..."
-	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) > /dev/null
