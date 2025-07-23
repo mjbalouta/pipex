@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/23 16:27:53 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:12:48 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int ac, char **av, char **envp)
 		return (ft_printf("Error.\n"));
 	comm.in_fd = open(av[1], O_RDONLY);
 	if (comm.in_fd == -1)
-		return (ft_printf("Error reading file.\n"));
+		ft_printf("Error reading file.\n");
 	comm.out_fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (comm.out_fd == -1)
 		return (ft_printf("Error creating the output file.\n"));

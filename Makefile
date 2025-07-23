@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/22 17:26:56 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/23 17:01:50 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,16 @@ fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) > /dev/null
 	@rm -f $(NAME)
 
+tester:
+	@echo "  $(B)$(AQUA)TESTER$(D)"
+	@if [ ! -d "tester" ]; then \
+		echo "   $(B)$(GOLD)Cloning visualizer repository$(D) 💾💾"; \
+		git clone git@github.com:michmos/42_pipex_tester.git tester; \
+		cd tester && bash run.sh --show-valgrind; \
+	else \
+		cd tester && bash run.sh --show-valgrind; \
+	fi
+
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus tester
