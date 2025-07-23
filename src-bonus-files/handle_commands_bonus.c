@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/22 17:44:33 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:26:49 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,43 @@ char	*find_path_variable(char **envp)
 	return (env_path);
 }
 
-int	write_full_path(char **envp, char *command, t_comm *comm)
+int	verify_command(char *full_path)
+{
+	if (access(full_path, X_OK) == 0)
+		return (0);
+	return (-1);
+}
+
+int	write_full_path(char **envp, char **command, t_comm *comm)
 {
 	char	*env_path;
 	char	**path_list;
 	char	*path;
 	char	*full_path;
 	int		i;
+	char	**comm_words;
 
+	comm_words = ft_split(command[0], ' ');
 	env_path = find_path_variable(envp);
 	path_list = ft_split(env_path, ':');
 	i = 0;
 	while (path_list[i])
 	{
 		path = ft_strjoin(path_list[i], "/");
-		full_path = ft_strjoin(path, command);
+		full_path = ft_strjoin(path, comm_words[0]);
 		free(path);
 		if (verify_command(full_path) == 0)
 		{
 			comm->full_path = full_path;
-			free(full_path);
 			free_list(path_list);
+			free_list(comm_words);
 			return (0);
 		}
+		free(full_path);
 		i++;
 	}
-	free(full_path);
 	free_list(path_list);
-	return (-1);
-}
-
-int	verify_command(char *full_path)
-{
-	if (access(full_path, X_OK) == 0)
-		return (0);
+	free_list(comm_words);
 	return (-1);
 }
 
@@ -73,24 +76,19 @@ int	handle_comm(t_args *args, t_comm *comm)
 	int		i;
 	char	**curr_comm;
 
-	i = 2;
-	while (i < (args->ac - 1))
+	i = 1;
+	while (++i < (args->ac - 1))
 	{
 		curr_comm = ft_split(args->av[i], ' ');
-		if (i == 2)
-			comm->first_command = curr_comm;
-		else if (i == (args->ac - 2))
-			comm->last_command = curr_comm;
-		if (write_full_path(args->envp, curr_comm[0], comm) == -1)
+		if (write_full_path(args->envp, curr_comm, comm) == -1)
 		{
-			if (comm->first_command)
-				free_list(comm->first_command);
-			if (comm->last_command)
-				free_list(comm->last_command);
 			free_list(curr_comm);
 			return (-1);
 		}
-		i++;
+		if (comm->full_path)
+			free(comm->full_path);
+		comm->full_path = NULL;
+		free_list(curr_comm);
 	}
 	return (0);
 }

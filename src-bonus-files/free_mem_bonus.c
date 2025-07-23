@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/22 15:50:38 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:27:13 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	free_mem(t_comm *comm)
 {
-	if (comm->first_command)
-		free_list(comm->first_command);
-	if (comm->last_command)
-		free_list(comm->last_command);
 	if (comm->full_path)
 		free(comm->full_path);
 }

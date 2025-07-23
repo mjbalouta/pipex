@@ -1,3 +1,8 @@
-ola
-av
-a
+2025-07-23 10:00:01 info User logged in
+2025-07-23 10:01:15 error Disk full
+2025-07-23 10:02:20 error Network timeout
+2025-07-23 10:03:00 info File saved
+2025-07-23 10:04:30 error Disk full
+2025-07-23 10:05:45 warning Low memory
+2025-07-23 10:06:50 error Network timeout
+2025-07-23 10:07:55 error Disk full
