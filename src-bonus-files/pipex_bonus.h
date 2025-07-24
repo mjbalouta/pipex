@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/23 16:26:59 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:26:21 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_args
 	char	**envp;
 }				t_args;
 
-
 void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd);
 void	execute_last_cmd(t_comm *comm, t_args *args, int i);
 void	pipex(t_comm *comm, t_args *args);
@@ -44,5 +43,6 @@ int		verify_command(char *full_path);
 int		handle_comm(t_args *args, t_comm *comm);
 void	free_mem(t_comm *comm);
 void	free_list(char **list);
+void	free_utils(char **path_list, char **comm_words);
 
 #endif

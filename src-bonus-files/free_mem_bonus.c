@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/23 16:27:13 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:25:34 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,12 @@ void	free_list(char **list)
 	}
 	free(list);
 	list = NULL;
+}
+
+void	free_utils(char **path_list, char **comm_words)
+{
+	if (path_list)
+		free_list(path_list);
+	if (comm_words)
+		free_list(comm_words);
 }

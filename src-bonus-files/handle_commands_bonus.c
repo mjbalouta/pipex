@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/23 16:26:49 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:25:55 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,18 @@ int	verify_command(char *full_path)
 	return (-1);
 }
 
-int	write_full_path(char **envp, char **command, t_comm *comm)
+char	**create_path_list(char **envp)
 {
 	char	*env_path;
+	char	**path_list;
+
+	env_path = find_path_variable(envp);
+	path_list = ft_split(env_path, ':');
+	return (path_list);
+}
+
+int	write_full_path(char **envp, char **command, t_comm *comm)
+{
 	char	**path_list;
 	char	*path;
 	char	*full_path;
@@ -48,9 +57,8 @@ int	write_full_path(char **envp, char **command, t_comm *comm)
 	char	**comm_words;
 
 	comm_words = ft_split(command[0], ' ');
-	env_path = find_path_variable(envp);
-	path_list = ft_split(env_path, ':');
 	i = 0;
+	path_list = create_path_list(envp);
 	while (path_list[i])
 	{
 		path = ft_strjoin(path_list[i], "/");
@@ -59,15 +67,13 @@ int	write_full_path(char **envp, char **command, t_comm *comm)
 		if (verify_command(full_path) == 0)
 		{
 			comm->full_path = full_path;
-			free_list(path_list);
-			free_list(comm_words);
+			free_utils(path_list, comm_words);
 			return (0);
 		}
 		free(full_path);
 		i++;
 	}
-	free_list(path_list);
-	free_list(comm_words);
+	free_utils(path_list, comm_words);
 	return (-1);
 }
 

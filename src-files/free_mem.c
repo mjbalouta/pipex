@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/18 19:08:15 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:08:16 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_mem(t_comm *comm)
 		free_list(comm->command);
 	if (comm->full_path)
 		free(comm->full_path);
+	if (comm->fd != -1)
+		close(comm->fd);
 }
 
 void	free_list(char **list)
@@ -32,4 +34,10 @@ void	free_list(char **list)
 	}
 	free(list);
 	list = NULL;
+}
+
+void	free_commands(t_comm *comm_in, t_comm *comm_out)
+{
+	free_mem(comm_in);
+	free_mem(comm_out);
 }

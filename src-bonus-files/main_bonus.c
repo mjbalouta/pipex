@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/23 17:12:48 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:21:19 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 {
 	pid_t	pid1;
 	char	**curr_comm;
-	
+
 	pid1 = fork();
 	if (pid1 < 0)
 		perror("fork (pid1)");
@@ -42,7 +42,7 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 void	execute_last_cmd(t_comm *comm, t_args *args, int i)
 {
 	char	**curr_comm;
-	
+
 	dup2(comm->prev_fd, STDIN_FILENO);
 	dup2(comm->out_fd, STDOUT_FILENO);
 	write_full_path(args->envp, &args->av[i], comm);
