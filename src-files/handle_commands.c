@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/24 14:54:21 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:20:20 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*find_path_variable(char **envp)
 	return (env_path);
 }
 
-void	write_full_path(char **envp, t_comm *comm)
+int	write_full_path(char **envp, t_comm *comm)
 {
 	char	*env_path;
 	char	**path_list;
@@ -51,12 +51,13 @@ void	write_full_path(char **envp, t_comm *comm)
 		{
 			comm->full_path = full_path;
 			free_list(path_list);
-			return ;
+			return (0);
 		}
 		i++;
 		free(full_path);
 	}
 	free_list(path_list);
+	return (-1);
 }
 
 void	handle_comm(t_args *args, t_comm *comm_in, t_comm *comm_out)
