@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/24 23:09:10 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:43:57 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_comm
 	int		in_fd;
 	int		out_fd;
 	int		prev_fd;
+	pid_t	*pid;
 }				t_comm;
 
 typedef struct s_args
@@ -38,15 +39,17 @@ typedef struct s_args
 }				t_args;
 
 void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd);
-void	execute_last_cmd(t_comm *comm, t_args *args, int i);
+void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count);
 int		pipex(t_comm *comm, t_args *args);
-char	*find_path_variable(char **envp);
-int		write_full_path(char **envp, char **command, t_comm *comm);
-int		verify_command(char *full_path);
-int		handle_comm(t_args *args, t_comm *comm);
+void	initialize_mem(t_comm *comm, t_args *args);
 void	free_mem(t_comm *comm);
 void	free_list(char **list);
 void	free_utils(char **path_list, char **comm_words);
-void 	initialize_mem(t_comm *comm);
+void	exit_safely(int error_type, t_comm *comm);
+void	close_fds(t_comm *comm);
+int		wait_for_child(t_comm *comm, int cmd_count);
+char	**create_path_list(char **envp);
+char	*create_full_path(char *path_list, char *comm_words);
+int		write_full_path(char **envp, char **command, t_comm *comm);
 
 #endif

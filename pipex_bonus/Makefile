@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/24 23:07:57 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/25 12:03:20 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CFLAGS      = -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
 NAME        = pipex
 
 # SRCS        = ./src-files/main.c ./src-files/handle_commands.c ./src-files/free_mem.c
-BONUS_SRCS  = ./src-bonus-files/main_bonus.c ./src-bonus-files/handle_commands_bonus.c ./src-bonus-files/mem_handling_bonus.c
+BONUS_SRCS  = ./src-bonus-files/main_bonus.c ./src-bonus-files/handle_commands_bonus.c ./src-bonus-files/mem_handling_bonus.c ./src-bonus-files/bonus_utils.c
 
 # OBJS        = $(SRCS:.c=.o)
 BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
