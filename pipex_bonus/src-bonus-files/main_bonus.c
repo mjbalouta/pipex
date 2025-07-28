@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/25 13:40:31 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:00:13 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 
 	if (comm->in_fd == -1)
 		exit_safely(ERROR, comm);
-	if (i == 2)
+	if (i == comm->start_index)
 		dup2(comm->in_fd, STDIN_FILENO);
 	else
 		dup2(comm->prev_fd, STDIN_FILENO);
@@ -68,7 +68,7 @@ int	pipex(t_comm *comm, t_args *args)
 	int	status;
 	int	cmd_count;
 
-	i = 1;
+	i = comm->start_index - 1;
 	cmd_count = 0;
 	while (++i < (args->ac - 2))
 	{
@@ -90,6 +90,35 @@ int	pipex(t_comm *comm, t_args *args)
 	return (status);
 }
 
+void	register_heredoc_input(t_comm *comm, t_args *args)
+{
+	char	*line;
+	int		pipefd[2];
+
+	comm->start_index = 3;
+	comm->limiter = args->av[2];
+	if (pipe(pipefd) == -1)
+		exit_safely(1, comm);
+	while (1)
+	{
+		write(2, "> ", 2);
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			break ;
+		if (line[ft_strlen(comm->limiter)] == '\n'
+			&& ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipefd[1], line, ft_strlen(line));
+		free(line);
+	}
+	get_next_line(-1);
+	close(pipefd[1]);
+	comm->in_fd = pipefd[0];
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_comm	comm;
@@ -102,6 +131,15 @@ int	main(int ac, char **av, char **envp)
 	args.ac = ac;
 	args.envp = envp;
 	initialize_mem(&comm, &args);
+	if (ft_strncmp(args.av[1], "here_doc", 9) == 0)
+	{
+		comm.out_fd = open(args.av[args.ac - 1], O_CREAT
+				| O_WRONLY | O_APPEND, 0644);
+		register_heredoc_input(&comm, &args);
+	}
+	else
+		comm.out_fd = open(args.av[args.ac - 1], O_CREAT
+				| O_WRONLY | O_TRUNC, 0644);
 	status = pipex(&comm, &args);
 	free_mem(&comm);
 	return (status);

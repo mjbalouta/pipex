@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:08:03 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/06/02 13:54:06 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:59:25 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,12 @@ char	*get_next_line(int fd)
 	char		*result;
 	int			found;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd == -1)
+		return (free_remain(&remain));
+	if (BUFFER_SIZE < 0)
 		return (NULL);
-	found = 2;
-	result = NULL;
-	if (!remain)
-		remain = ft_ncalloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!remain)
+	initialize_memo(&found, &result);
+	if (!init_remain(&remain))
 		return (NULL);
 	if (remain[0])
 		result = ft_fill_w_remain(result, &remain, &found);
@@ -113,11 +112,7 @@ char	*get_next_line(int fd)
 	{
 		result = ft_read_and_fill(fd, result, &remain, &found);
 		if (result == NULL)
-		{
-			free(remain);
-			remain = NULL;
-			return (ft_free_arrays(result, NULL), NULL);
-		}
+			return (ft_free_arrays(result, NULL), free_remain(&remain));
 	}
 	return (result);
 }

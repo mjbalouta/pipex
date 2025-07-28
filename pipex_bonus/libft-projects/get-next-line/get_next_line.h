@@ -23,15 +23,13 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-
 char	*ft_nstrjoin(char *s1, char *s2);
-
 size_t	ft_nstrlen(const char *s);
-
 void	*ft_ncalloc(size_t nmemb, size_t size);
-
 void	ft_clean_array(char *ptr);
-
 void	ft_free_arrays(char *result, char *line);
+int		init_remain(char **remain);
+char	*free_remain(char **remain);
+void	initialize_memo(int *found, char **result);
 
 #endif

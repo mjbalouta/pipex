@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/25 13:43:57 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:38:49 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define ERROR 1
 # define ERROR_COMM 127
+# define BUFFER_S 1024
 
 typedef struct s_comm
 {
@@ -29,6 +30,8 @@ typedef struct s_comm
 	int		out_fd;
 	int		prev_fd;
 	pid_t	*pid;
+	char	*limiter;
+	int		start_index;
 }				t_comm;
 
 typedef struct s_args

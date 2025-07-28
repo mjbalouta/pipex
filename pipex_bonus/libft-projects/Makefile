@@ -14,7 +14,7 @@ CC 			= cc
 CFLAGS		= -Wall -Wextra -Werror -I./Libft -g
 NAME		= complete_libft.a
 
-SRCS		= ./get-next-line/get_next_line.c ./get-next-line/get_next_line_utils.c
+SRCS		= ./get-next-line/get_next_line.c ./get-next-line/get_next_line_utils.c ./get-next-line/get_next_line_utils2.c
 OBJS		= $(SRCS:.c=.o)
 LIBFT_DIR 	= ./libft
 LIBFT 		= ./libft/libft.a
