@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/28 17:00:13 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:02:41 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	register_heredoc_input(t_comm *comm, t_args *args)
 		exit_safely(1, comm);
 	while (1)
 	{
-		write(2, "> ", 2);
+		write(1, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;

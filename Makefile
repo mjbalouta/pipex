@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/24 22:41:22 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/28 17:06:19 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,26 +14,26 @@ CFLAGS      = -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
 NAME        = pipex
 
 SRCS        = ./src-files/main.c ./src-files/handle_commands.c ./src-files/free_mem.c
-# BONUS_SRCS  = ./src-bonus-files/main_bonus.c ./src-bonus-files/handle_commands_bonus.c ./src-bonus-files/free_mem_bonus.c
+BONUS_SRCS  = ./src-bonus-files/main_bonus.c ./src-bonus-files/handle_commands_bonus.c ./src-bonus-files/mem_handling_bonus.c ./src-bonus-files/bonus_utils.c
 
 OBJS        = $(SRCS:.c=.o)
-# BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
+BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
 
 LIBFT_DIR   = ./libft-projects
 LIBFT       = $(LIBFT_DIR)/complete_libft.a
 
 all: $(LIBFT) $(NAME)
 
-# bonus: $(LIBFT) $(BONUS_OBJS)
-# 	@if [ -f $(NAME) ]; then \
-# 	echo "Executable already exists. No relink."; \
-# 	else \
-# 	echo "Compiling bonus..."; \
-# 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
+bonus: $(LIBFT) $(BONUS_OBJS)
+	@if [ -f $(NAME) ]; then \
+	echo "Executable already exists. No relink."; \
+	else \
+	echo "Compiling pipex bonus..."; \
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
 
-$(NAME): $(OBJS)
-	@echo "Compiling pipex..."
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(BONUS)
+	@echo "Compiling bonus pipex..."
+	@$(CC) $(CFLAGS) $(BONUS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) > /dev/null
@@ -54,9 +54,9 @@ fclean: clean
 re: fclean all
 
 tester:
-	@echo "  $(B)$(AQUA)TESTER$(D)"
+	@echo "TESTER"
 	@if [ ! -d "tester" ]; then \
-		echo "   $(B)$(GOLD)Cloning visualizer repository$(D) 💾💾"; \
+		echo "Cloning visualizer repository"; \
 		git clone git@github.com:michmos/42_pipex_tester.git tester; \
 		cd tester && bash run.sh --show-valgrind; \
 	else \
