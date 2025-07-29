@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/28 17:06:19 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/29 14:46:32 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,9 @@ bonus: $(LIBFT) $(BONUS_OBJS)
 	echo "Compiling pipex bonus..."; \
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
 
-$(NAME): $(BONUS)
-	@echo "Compiling bonus pipex..."
-	@$(CC) $(CFLAGS) $(BONUS) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJS)
+	@echo "Compiling pipex..."
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) > /dev/null
@@ -52,15 +52,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-tester:
-	@echo "TESTER"
-	@if [ ! -d "tester" ]; then \
-		echo "Cloning visualizer repository"; \
-		git clone git@github.com:michmos/42_pipex_tester.git tester; \
-		cd tester && bash run.sh --show-valgrind; \
-	else \
-		cd tester && bash run.sh --show-valgrind; \
-	fi
 
 .PHONY: all clean fclean re bonus tester
