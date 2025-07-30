@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/30 18:26:38 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:42:42 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define ERROR 1
 # define ERROR_COMM 127
-# define BUFFER_S 1024
+# define COMM_NOT_FOUND "command not found"
 
 typedef struct s_comm
 {
@@ -56,5 +56,7 @@ char	*create_full_path(char *path_list, char *comm_words);
 int		write_full_path(char **envp, char **command, t_comm *comm);
 void	free_path(char *path);
 int		verify_if_path(char *command);
+int		find_full_path(char *path, char *first_word_cmd, t_comm *comm);
+void	check_if_executable(t_comm *comm, t_args *args, int i);
 
 #endif

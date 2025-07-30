@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/30 18:23:54 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:48:44 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,23 @@ int	verify_if_path(char *command)
 	return (0);
 }
 
+int find_full_path(char *path, char *first_word_cmd, t_comm *comm)
+{
+	char	*full_path;
+
+	full_path = create_full_path(path, first_word_cmd);
+	if (access(full_path, X_OK) == 0)
+	{
+		comm->full_path = full_path;
+		return (0);
+	}
+	free(full_path);
+	return (-1);
+}
+
 int	write_full_path(char **envp, char **command, t_comm *comm)
 {
 	char	**path_list;
-	char	*full_path;
 	int		i;
 	char	**comm_words;
 
@@ -78,14 +91,8 @@ int	write_full_path(char **envp, char **command, t_comm *comm)
 	path_list = create_path_list(envp);
 	while (path_list[++i])
 	{
-		full_path = create_full_path(path_list[i], comm_words[0]);
-		if (access(full_path, X_OK) == 0)
-		{
-			comm->full_path = full_path;
-			free_utils(path_list, comm_words);
-			return (0);
-		}
-		free(full_path);
+		if (find_full_path(path_list[i], comm_words[0], comm) == 0)
+			return (free_utils(path_list, comm_words), 0);
 	}
 	free_utils(path_list, comm_words);
 	return (-1);
