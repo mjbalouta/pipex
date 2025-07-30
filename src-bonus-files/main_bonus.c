@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/28 17:02:41 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:29:19 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 	if (!curr_comm[0] || write_full_path(args->envp, &args->av[i], comm) == -1
 		|| execve(comm->full_path, curr_comm, args->envp) == -1)
 	{
+		perror(args->av[i]);
 		free_list(curr_comm);
 		exit_safely(0, comm);
 	}
@@ -54,6 +55,7 @@ void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 			|| write_full_path(args->envp, &args->av[i], comm) == -1
 			|| execve(comm->full_path, curr_comm, args->envp) == -1)
 		{
+			perror(args->av[i]);
 			free_list(curr_comm);
 			exit_safely(ERROR_COMM, comm);
 		}
@@ -130,9 +132,12 @@ int	main(int ac, char **av, char **envp)
 	args.av = av;
 	args.ac = ac;
 	args.envp = envp;
-	initialize_mem(&comm, &args);
+	if (initialize_mem(&comm, &args) == -1)
+		return (perror(args.av[1]), 1);
 	if (ft_strncmp(args.av[1], "here_doc", 9) == 0)
 	{
+		if (ac < 6)
+			return (perror(args.av[1]), 1);
 		comm.out_fd = open(args.av[args.ac - 1], O_CREAT
 				| O_WRONLY | O_APPEND, 0644);
 		register_heredoc_input(&comm, &args);

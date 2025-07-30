@@ -6,29 +6,40 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/28 14:58:56 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:22:30 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	initialize_mem(t_comm *comm, t_args *args)
+int	initialize_mem(t_comm *comm, t_args *args)
 {
 	comm->start_index = 2;
-	comm->full_path = NULL;
 	comm->in_fd = -1;
 	comm->out_fd = -1;
 	comm->prev_fd = -1;
+	comm->full_path = NULL;
 	comm->in_fd = open(args->av[1], O_RDONLY);
+	if (comm->in_fd == -1)
+		return (-1);
 	comm->pid = ft_calloc((args->ac - 2), sizeof(pid_t));
 	if (!comm->pid)
 		exit(ERROR);
+	return (0);
+}
+
+void	free_path(char *path)
+{
+	if (path)
+	{
+		free(path);
+		path = NULL;
+	}
 }
 
 void	free_mem(t_comm *comm)
 {
-	if (comm->full_path)
-		free(comm->full_path);
+	free_path(comm->full_path);
 	close_fds(comm);
 	if (comm->pid)
 		free(comm->pid);

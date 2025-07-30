@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/29 14:46:32 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/30 17:11:55 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ all: $(LIBFT) $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJS)
 	@if [ -f $(NAME) ]; then \
-	echo "Executable already exists. No relink."; \
+	echo "Executable already exists. Please do 'make fclean' first."; \
 	else \
-	echo "Compiling pipex bonus..."; \
+	echo "Pipex bonus compiled."; \
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
 
 $(NAME): $(OBJS)
-	@echo "Compiling pipex..."
+	@echo "Pipex compiled."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
@@ -42,12 +42,12 @@ $(LIBFT):
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "Cleaning object files..."
+	@echo "Object files cleaned."
 	@$(MAKE) clean -C $(LIBFT_DIR) > /dev/null
 	@rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	@echo "Removing executable..."
+	@echo "Executable removed."
 	@$(MAKE) fclean -C $(LIBFT_DIR) > /dev/null
 	@rm -f $(NAME)
 

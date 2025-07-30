@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/25 13:40:09 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:23:54 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ char	*create_full_path(char *path_list, char *comm_words)
 	return (full_path);
 }
 
+int	verify_if_path(char *command)
+{
+	int	i;
+
+	i = 0;
+	while (command[i])
+	{
+		if (command[i] == '/')
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 int	write_full_path(char **envp, char **command, t_comm *comm)
 {
 	char	**path_list;
@@ -51,8 +65,14 @@ int	write_full_path(char **envp, char **command, t_comm *comm)
 	int		i;
 	char	**comm_words;
 
+	free_path(comm->full_path);
 	if (!command || !command[0] || command[0][0] == '\0')
 		return (-1);
+	if (verify_if_path(command[0]) == -1)
+	{
+		comm->full_path = ft_strdup(command[0]);
+		return (0);
+	}
 	comm_words = ft_split(command[0], ' ');
 	i = -1;
 	path_list = create_path_list(envp);

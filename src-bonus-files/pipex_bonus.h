@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/28 15:38:49 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:26:38 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_args
 void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd);
 void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count);
 int		pipex(t_comm *comm, t_args *args);
-void	initialize_mem(t_comm *comm, t_args *args);
+int		initialize_mem(t_comm *comm, t_args *args);
 void	free_mem(t_comm *comm);
 void	free_list(char **list);
 void	free_utils(char **path_list, char **comm_words);
@@ -54,5 +54,7 @@ int		wait_for_child(t_comm *comm, int cmd_count);
 char	**create_path_list(char **envp);
 char	*create_full_path(char *path_list, char *comm_words);
 int		write_full_path(char **envp, char **command, t_comm *comm);
+void	free_path(char *path);
+int		verify_if_path(char *command);
 
 #endif
