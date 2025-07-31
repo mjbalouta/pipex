@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/31 12:46:16 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/31 12:47:08 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ all: $(LIBFT) $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJS)
 	@if [ -f $(NAME) ]; then \
-	echo "Executable already exists. No relink."; \
+	echo "Executable already exists. Please do 'make fclean'."; \
 	else \
 	echo "Compiling pipex bonus..."; \
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
