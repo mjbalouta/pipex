@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:29:12 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/30 18:22:30 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:10:27 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	initialize_mem(t_comm *comm, t_args *args)
 	comm->prev_fd = -1;
 	comm->full_path = NULL;
 	comm->in_fd = open(args->av[1], O_RDONLY);
-	if (comm->in_fd == -1)
-		return (-1);
 	comm->pid = ft_calloc((args->ac - 2), sizeof(pid_t));
 	if (!comm->pid)
 		exit(ERROR);
