@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 12:28:02 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:07:43 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 {
 	char	**curr_comm;
 
-	if (comm->in_fd == -1)
-	{
-		perror(args->av[1]);
-		exit_safely(ERROR, comm);
-	}
 	if (i == comm->start_index)
+	{
+		if (comm->in_fd == -1)
+		{
+			perror(args->av[1]);
+			exit_safely(ERROR, comm);
+		}
 		dup2(comm->in_fd, STDIN_FILENO);
+	}
 	else
 		dup2(comm->prev_fd, STDIN_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 12:42:37 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:21:43 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ void	register_heredoc_input(t_comm *comm, t_args *args)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		if (line[ft_strlen(comm->limiter)] == '\n'
-			&& ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
+		if (ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
 		{
 			free(line);
 			break ;
