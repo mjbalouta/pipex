@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/30 23:42:42 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:18:55 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 # define ERROR 1
 # define ERROR_COMM 127
-# define COMM_NOT_FOUND "command not found"
 
 typedef struct s_comm
 {

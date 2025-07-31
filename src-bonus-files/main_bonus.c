@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 00:22:18 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:03:22 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 	check_if_executable(comm, args, i);
 	if (execve(comm->full_path, curr_comm, args->envp) == -1)
 	{
+		perror(curr_comm[0]);
 		free_list(curr_comm);
 		exit_safely(0, comm);
 	}
@@ -57,6 +58,7 @@ void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 		check_if_executable(comm, args, i);
 		if (execve(comm->full_path, curr_comm, args->envp) == -1)
 		{
+			perror(curr_comm[0]);
 			free_list(curr_comm);
 			exit_safely(ERROR_COMM, comm);
 		}
