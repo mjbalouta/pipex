@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 12:23:14 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:28:02 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 	if (comm->pid[cmd_count] == 0)
 	{
 		if (comm->out_fd == -1)
+		{
+			perror(args->av[args->ac - 1]);
 			exit_safely(ERROR, comm);
+		}
 		dup2(comm->prev_fd, STDIN_FILENO);
 		dup2(comm->out_fd, STDOUT_FILENO);
 		curr_comm = ft_split(args->av[i], ' ');

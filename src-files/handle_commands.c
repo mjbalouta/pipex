@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_commands.c                                  :+:      :+:    :+:   */
+/*   handle_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 11:28:18 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:33:27 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,39 +58,42 @@ int	verify_if_path(char *command)
 	return (0);
 }
 
-int	write_full_path(char **envp, t_comm *comm)
+int	find_full_path(char *path, char *first_word_cmd, t_comm *comm)
 {
-	char	**path_list;
-	int		i;
 	char	*full_path;
 
-	if (verify_if_path(comm->command[0]) == -1)
+	full_path = create_full_path(path, first_word_cmd);
+	if (access(full_path, X_OK) == 0)
 	{
-		comm->full_path = ft_strdup(comm->command[0]);
+		comm->full_path = full_path;
 		return (0);
 	}
-	path_list = create_path_list(envp);
-	i = 0;
-	while (path_list[i])
-	{
-		full_path = create_full_path(path_list[i], comm->command[0]);
-		if (access(full_path, X_OK) == 0)
-		{
-			comm->full_path = full_path;
-			free_list(path_list);
-			return (0);
-		}
-		i++;
-		free(full_path);
-	}
-	free_list(path_list);
+	free(full_path);
 	return (-1);
 }
 
-void	handle_comm(t_args *args, t_comm *comm_in, t_comm *comm_out)
+int	write_full_path(char **envp, char **command, t_comm *comm)
 {
-	comm_in->command = ft_split(args->av[2], ' ');
-	comm_out->command = ft_split(args->av[3], ' ');
-	comm_in->full_path = NULL;
-	comm_out->full_path = NULL;
+	char	**path_list;
+	int		i;
+	char	**comm_words;
+
+	free_path(comm->full_path);
+	if (!command || !command[0] || command[0][0] == '\0')
+		return (-1);
+	if (verify_if_path(command[0]) == -1)
+	{
+		comm->full_path = ft_strdup(command[0]);
+		return (0);
+	}
+	comm_words = ft_split(command[0], ' ');
+	i = -1;
+	path_list = create_path_list(envp);
+	while (path_list[++i])
+	{
+		if (find_full_path(path_list[i], comm_words[0], comm) == 0)
+			return (free_utils(path_list, comm_words), 0);
+	}
+	free_utils(path_list, comm_words);
+	return (-1);
 }
