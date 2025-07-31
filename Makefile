@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/31 12:41:30 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/31 12:46:16 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,11 @@ LIBFT       = $(LIBFT_DIR)/complete_libft.a
 all: $(LIBFT) $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJS)
-	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
+	@if [ -f $(NAME) ]; then \
+	echo "Executable already exists. No relink."; \
+	else \
+	echo "Compiling pipex bonus..."; \
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
 
 $(NAME): $(OBJS)
 	@echo "Pipex compiled."
