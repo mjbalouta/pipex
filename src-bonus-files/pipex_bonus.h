@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 10:18:55 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:32:36 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ int		write_full_path(char **envp, char **command, t_comm *comm);
 void	free_path(char *path);
 int		verify_if_path(char *command);
 int		find_full_path(char *path, char *first_word_cmd, t_comm *comm);
-void	check_if_executable(t_comm *comm, t_args *args, int i);
 
 #endif

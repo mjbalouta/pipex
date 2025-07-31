@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 10:03:22 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:33:57 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 {
 	char	**curr_comm;
-	
+
 	if (comm->in_fd == -1)
 		exit_safely(ERROR, comm);
 	if (i == comm->start_index)
@@ -30,8 +30,8 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 	curr_comm = ft_split(args->av[i], ' ');
 	if (!curr_comm)
 		exit_safely(ERROR, comm);
-	check_if_executable(comm, args, i);
-	if (execve(comm->full_path, curr_comm, args->envp) == -1)
+	if (write_full_path(args->envp, &args->av[i], comm) == -1
+		|| execve(comm->full_path, curr_comm, args->envp) == -1)
 	{
 		perror(curr_comm[0]);
 		free_list(curr_comm);
@@ -55,8 +55,8 @@ void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 		curr_comm = ft_split(args->av[i], ' ');
 		if (!curr_comm)
 			exit_safely(ERROR, comm);
-		check_if_executable(comm, args, i);
-		if (execve(comm->full_path, curr_comm, args->envp) == -1)
+		if (write_full_path(args->envp, &args->av[i], comm) == -1
+			|| execve(comm->full_path, curr_comm, args->envp) == -1)
 		{
 			perror(curr_comm[0]);
 			free_list(curr_comm);

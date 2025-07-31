@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/24 18:24:32 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:27:41 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ typedef struct s_args
 }				t_args;
 
 int		write_full_path(char **envp, t_comm *comm);
-char	*find_path_variable(char **envp);
+char	**create_path_list(char **envp);
+char	*create_full_path(char *path_list, char *comm_words);
+int		verify_if_path(char *command);
 void	handle_comm(t_args *args, t_comm *comm_in, t_comm *comm_out);
 int		pipex(t_comm *comm_in, t_comm *comm_out, t_args *args);
 void	ex_cm_one(int *pipefd, t_comm *comm_in, t_comm *comm_out, t_args *args);

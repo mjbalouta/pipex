@@ -6,15 +6,16 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/24 18:20:20 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:28:18 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_path_variable(char **envp)
+char	**create_path_list(char **envp)
 {
 	char	*env_path;
+	char	**path_list;
 	int		i;
 
 	i = 0;
@@ -28,25 +29,51 @@ char	*find_path_variable(char **envp)
 		}
 		i++;
 	}
-	return (env_path);
+	path_list = ft_split(env_path, ':');
+	return (path_list);
+}
+
+char	*create_full_path(char *path_list, char *comm_words)
+{
+	char	*path;
+	char	*full_path;
+
+	path = ft_strjoin(path_list, "/");
+	full_path = ft_strjoin(path, comm_words);
+	free(path);
+	return (full_path);
+}
+
+int	verify_if_path(char *command)
+{
+	int	i;
+
+	i = 0;
+	while (command[i])
+	{
+		if (command[i] == '/')
+			return (-1);
+		i++;
+	}
+	return (0);
 }
 
 int	write_full_path(char **envp, t_comm *comm)
 {
-	char	*env_path;
 	char	**path_list;
 	int		i;
-	char	*path;
 	char	*full_path;
 
-	env_path = find_path_variable(envp);
-	path_list = ft_split(env_path, ':');
+	if (verify_if_path(comm->command[0]) == -1)
+	{
+		comm->full_path = ft_strdup(comm->command[0]);
+		return (0);
+	}
+	path_list = create_path_list(envp);
 	i = 0;
 	while (path_list[i])
 	{
-		path = ft_strjoin(path_list[i], "/");
-		full_path = ft_strjoin(path, comm->command[0]);
-		free(path);
+		full_path = create_full_path(path_list[i], comm->command[0]);
 		if (access(full_path, X_OK) == 0)
 		{
 			comm->full_path = full_path;

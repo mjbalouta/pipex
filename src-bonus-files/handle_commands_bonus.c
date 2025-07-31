@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 00:48:44 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:33:27 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	verify_if_path(char *command)
 	return (0);
 }
 
-int find_full_path(char *path, char *first_word_cmd, t_comm *comm)
+int	find_full_path(char *path, char *first_word_cmd, t_comm *comm)
 {
 	char	*full_path;
 

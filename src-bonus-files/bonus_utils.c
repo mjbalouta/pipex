@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:56:33 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 10:20:13 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:33:06 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,3 @@ int	wait_for_child(t_comm *comm, int cmd_count)
 	}
 	return (last_status >> 8);
 }
-
-void	check_if_executable(t_comm *comm, t_args *args, int i)
-{
-	if (write_full_path(args->envp, &args->av[i], comm) == -1 && verify_if_path(&args->av[i][0]) == 0)
-	{
-		ft_printf("%s : command not found", args->av[i]); //não imprime????
-		exit(127);
-	}
-}
-
