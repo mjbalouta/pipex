@@ -6,7 +6,7 @@
 #    By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 16:36:07 by mjoao-fr          #+#    #+#              #
-#    Updated: 2025/07/31 12:40:19 by mjoao-fr         ###   ########.fr        #
+#    Updated: 2025/07/31 12:41:30 by mjoao-fr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,7 @@ LIBFT       = $(LIBFT_DIR)/complete_libft.a
 all: $(LIBFT) $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJS)
-	@if [ -f $(NAME) ]; then \
-	echo "Executable already exists. Please do 'make fclean' first."; \
-	else \
-	echo "Pipex bonus compiled."; \
-	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME); fi
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "Pipex compiled."
@@ -52,5 +48,15 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+tester:
+	@echo "  $(B)$(AQUA)TESTER$(D)"
+	@if [ ! -d "tester" ]; then \
+		echo "   $(B)$(GOLD)Cloning visualizer repository$(D) 💾💾"; \
+		git clone git@github.com:michmos/42_pipex_tester.git tester; \
+		cd tester && bash run.sh --show-valgrind; \
+	else \
+		cd tester && bash run.sh --show-valgrind; \
+	fi
 
 .PHONY: all clean fclean re bonus

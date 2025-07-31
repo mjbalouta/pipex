@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 12:39:19 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:42:37 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	main(int ac, char **av, char **envp)
 	if (initialize_mem(&comm, &args) == -1)
 		return (perror(args.av[1]), 1);
 	comm.out_fd = open(args.av[args.ac - 1], O_CREAT
-		| O_WRONLY | O_TRUNC, 0644);
+			| O_WRONLY | O_TRUNC, 0644);
 	status = pipex(&comm, &args);
 	free_mem(&comm);
 	return (status);
