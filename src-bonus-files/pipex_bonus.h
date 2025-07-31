@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:50:26 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 12:23:34 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:48:27 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_comm
 	pid_t	*pid;
 	char	*limiter;
 	int		start_index;
+	char	**curr_comm;
 }				t_comm;
 
 typedef struct s_args
@@ -54,8 +55,9 @@ char	**create_path_list(char **envp);
 char	*create_full_path(char *path_list, char *comm_words);
 int		write_full_path(char **envp, char **command, t_comm *comm);
 void	free_path(char *path);
-int		verify_if_path(char *command);
+int		verify_if_path(char **command, t_comm *comm);
 int		find_full_path(char *path, char *first_word_cmd, t_comm *comm);
 void	return_error(int error_type, char **curr_comm, t_comm *comm);
+void	register_heredoc_input(t_comm *comm, t_args *args);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 16:21:43 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:37:14 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,34 +91,6 @@ int	pipex(t_comm *comm, t_args *args)
 	close_fds(comm);
 	status = wait_for_child(comm, cmd_count);
 	return (status);
-}
-
-void	register_heredoc_input(t_comm *comm, t_args *args)
-{
-	char	*line;
-	int		pipefd[2];
-
-	comm->start_index = 3;
-	comm->limiter = args->av[2];
-	if (pipe(pipefd) == -1)
-		exit_safely(1, comm);
-	while (1)
-	{
-		write(1, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			break ;
-		if (ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(pipefd[1], line, ft_strlen(line));
-		free(line);
-	}
-	get_next_line(-1);
-	close(pipefd[1]);
-	comm->in_fd = pipefd[0];
 }
 
 int	main(int ac, char **av, char **envp)

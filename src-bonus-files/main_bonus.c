@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:24 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:43 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:48:03 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 {
-	char	**curr_comm;
 
 	if (i == comm->start_index)
 	{
@@ -32,19 +31,13 @@ void	execute_first_mid_cmd(t_comm *comm, t_args *args, int i, int *pipefd)
 	close(pipefd[1]);
 	if (comm->prev_fd != -1)
 		close(comm->prev_fd);
-	curr_comm = ft_split(args->av[i], ' ');
-	if (!curr_comm)
-		exit_safely(ERROR, comm);
 	if (write_full_path(args->envp, &args->av[i], comm) == -1
-		|| execve(comm->full_path, curr_comm, args->envp) == -1)
-		return_error(0, curr_comm, comm);
-	free_list(curr_comm);
+		|| execve(comm->full_path, comm->curr_comm, args->envp) == -1)
+		return_error(0, comm->curr_comm, comm);
 }
 
 void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 {
-	char	**curr_comm;
-
 	if (comm->pid[cmd_count] < 0)
 		exit_safely(ERROR, comm);
 	if (comm->pid[cmd_count] == 0)
@@ -56,13 +49,9 @@ void	execute_last_cmd(t_comm *comm, t_args *args, int i, int cmd_count)
 		}
 		dup2(comm->prev_fd, STDIN_FILENO);
 		dup2(comm->out_fd, STDOUT_FILENO);
-		curr_comm = ft_split(args->av[i], ' ');
-		if (!curr_comm)
-			exit_safely(ERROR, comm);
 		if (write_full_path(args->envp, &args->av[i], comm) == -1
-			|| execve(comm->full_path, curr_comm, args->envp) == -1)
-			return_error(ERROR_COMM, curr_comm, comm);
-		free_list(curr_comm);
+			|| execve(comm->full_path, comm->curr_comm, args->envp) == -1)
+			return_error(ERROR_COMM, comm->curr_comm, comm);
 	}
 }
 
@@ -110,8 +99,7 @@ void	register_heredoc_input(t_comm *comm, t_args *args)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		if (line[ft_strlen(comm->limiter)] == '\n'
-			&& ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
+		if (ft_strncmp(line, comm->limiter, ft_strlen(comm->limiter)) == 0)
 		{
 			free(line);
 			break ;
