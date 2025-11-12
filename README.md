@@ -8,7 +8,13 @@ This project allows you to explore a UNIX mechanism in detail.
 
 2) Type `make` to compile the project
 
-3) Type `./pipex` followed by a prompt that follows this model `< file1 cmd1 | cmd2 > file2`
+3) Type `./pipex` followed by a prompt that follows this model `infile cmd1 cmd2 outfile`
+
+**For Bonus:**
+
+1) Type `make bonus`
+
+2) Type `./pipex` followed by a prompt that follows this model `infile cmd1 cmd2 cmd3 (...) outfile`
 
 ### Requirements
 
@@ -43,20 +49,20 @@ This project allows you to explore a UNIX mechanism in detail.
 
 **UNDERSTANDING KEY CONCEPTS AND DEFINING STRATEGY**
 
-1) Processes:
+**1) Processes:**
 - A process is an instance of a running program;
 - You need to create child processes using fork();
 
-2) File Descriptors:
+**2) File Descriptors:**
 - File descriptors are integers that represent open files or standard streams.
 
-3) Pipes:
+**3) Pipes:**
 - A pipe is used to pass data from one process to another.
 
-4) Command Execution:
+**4) Command Execution:**
 - Use execve() to replace the current process with a new one;
 - You must split command string and find the path to the binary.
 
-5) Environment Path:
+**5) Environment Path:**
 - Commands like ls or grep are binaries stored in directories from the PATH environment variable;
 - You must parse envp[] to find the full path.
