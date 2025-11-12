@@ -6,7 +6,7 @@
 /*   By: mjoao-fr <mjoao-fr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:05:32 by mjoao-fr          #+#    #+#             */
-/*   Updated: 2025/07/31 16:51:07 by mjoao-fr         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:08:39 by mjoao-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,17 @@ char	*create_full_path(char *path_list, char *comm_words)
 	return (full_path);
 }
 
-int	verify_if_path(char **command, t_comm *comm)
+int	verify_if_path(char *command)
 {
 	int	i;
 
 	i = 0;
-	if (comm->curr_comm[0])
-		free_list(comm->curr_comm);
-	while (command[0][i])
+	while (command[i])
 	{
-		if (command[0][i] == '/')
-		{
-			comm->curr_comm = command;
-			if (!comm->curr_comm)
-				exit_safely(ERROR, comm);
+		if (command[i] == '/')
 			return (-1);
-		}
 		i++;
 	}
-	comm->curr_comm = command;
-	if (!comm->curr_comm)
-		exit_safely(ERROR, comm);
 	return (0);
 }
 
@@ -91,7 +81,7 @@ int	write_full_path(char **envp, char **command, t_comm *comm)
 	free_path(comm->full_path);
 	if (!command || !command[0] || command[0][0] == '\0')
 		return (-1);
-	if (verify_if_path(command, comm) == -1)
+	if (verify_if_path(command[0]) == -1)
 	{
 		comm->full_path = ft_strdup(command[0]);
 		return (0);
